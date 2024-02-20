@@ -27,10 +27,7 @@ app.get('/movie',(req, res)=>{
     res.json(movies);
 });
 
-//Set server to listen to port: port
-app.listen(port,()=>{
-  console.log("server is at port:"+port);
-})
+
 
 //add movie to list
 app.post('/movie',(req, res)=>{
@@ -38,4 +35,21 @@ app.post('/movie',(req, res)=>{
     console.log(movie);
     movies.push(movie);
     res.send("movie added to the list"+movie);
+});
+
+//Search for a movie in the list
+app.get('/movie/:id',(req, res)=>{
+    const id=req.params.id;
+    for(let movie of movies){
+        if(movie.id ===id){
+            res.json(movie);
+            return;
+        }
+    }
+    res.status(400).send('movie not found');
+});
+
+//Set server to listen to port: port
+app.listen(port,()=>{
+    console.log("server is at port:"+port);
 })
