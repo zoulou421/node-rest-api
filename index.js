@@ -38,15 +38,31 @@ app.post('/movie',(req, res)=>{
 });
 
 //Search for a movie in the list
-app.get('/movie/:id',(req, res)=>{
-    const id=req.params.id;
-    for(let movie of movies){
-        if(movie.id ===id){
-            res.json(movie);
-            return;
-        }
+app.get("/movie/:id",(req, res)=>{
+    //const id=parseInt(req.params.id);
+    /*
+        console.log(movies);
+        console.log("Id  retrieved is ");
+            for(let movie of movies){
+                console.log(movie);
+                if(req.params.id){
+                    console.log(movie.id);
+                    console.log("++++++++++++++++"+movie.id+"+++++++++++++++++++")
+                    res.json(movie);
+                    console.log(movie);
+                    return
+                }
+            }
+            res.status(400).send('movie not found');
+            console.log("error");*/
+    const found=movies.some(movie=>movie.id===parseInt(req.params.id));
+    if(found){
+        res.json(movies.filter(movie=>movie.id===parseInt(req.params.id)))
+    }else{
+        res.sendStatus('400');
     }
-    res.status(400).send('movie not found');
+
+
 });
 
 //Set server to listen to port: port
