@@ -65,6 +65,30 @@ app.get("/movie/:id",(req, res)=>{
 
 });
 
+//delete movie to list
+/*app.delete('/movie/:id',(req,res)=>{
+    const id= req.params.id;
+    movies=movies.filter(movie=>{
+        if(movie.id!==id){
+           return true;
+        }
+        return false;
+    });
+    res.send("movie is deleted");
+})*/
+
+//delete user
+    app.delete("/movie/:id",(req, res)=>{
+    const found=movies.some(movie=>movie.id===parseInt(req.params.id));
+    if(found){
+        movies=movies.filter(movie=>movie.id!==parseInt(req.params.id));
+        res.json({msg:" movie deleted",movies})
+
+    }else{
+        res.sendStatus(400);
+    }
+
+})
 //Set server to listen to port: port
 app.listen(port,()=>{
     console.log("server is at port:"+port);
